@@ -103,11 +103,7 @@ export function LoginForm({ onSubmit, error, isLoading }: LoginFormProps) {
             </Button>
           </form>
           
-          <div className="mt-6 pt-4 border-t border-border">
-            <p className="text-xs text-muted-foreground text-center">
-              <strong>Demo:</strong> Use admin@atendmax.com, supervisor@atendmax.com ou user@atendmax.com com qualquer senha (min. 4 caracteres)
-            </p>
-          </div>
+      
         </CardContent>
       </Card>
     </div>
