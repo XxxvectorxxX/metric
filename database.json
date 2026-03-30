@@ -1,0 +1,13 @@
+{
+  "id": "1",
+  "name": "zpro",
+  "host": "atendimento.royalsistemas.com.br",
+  "port": 5432,
+  "database": "postgres",
+  "username": "zpro",
+  "password": "lUbNZDFpLD4KABeNfAxFZyl1jscjhvGiWffU0mwakiI=",
+  "ssl": true,
+  "customQuery": "\nSELECT \n  u.name,\n\n  COUNT(CASE WHEN t.status = 'pending' THEN 1 END) AS pendentes,\n  COUNT(CASE WHEN t.status = 'open' THEN 1 END) AS atendendo,\n  COUNT(CASE WHEN t.status = 'closed' THEN 1 END) AS finalizados,\n  COUNT(t.id) AS total,\n\n  ROUND(\n    AVG(\n      CASE \n        WHEN te.evaluation ~ '^[0-9]+(\\.[0-9]+)?$' \n        THEN te.evaluation::numeric\n      END\n    ), 2\n  ) AS media_avaliacoes\n\nFROM \"Users\" u\nLEFT JOIN \"Tickets\" t \n  ON t.\"userId\" = u.id \n  AND t.\"tenantId\" = 1\n  AND t.\"createdAt\" >= NOW() - INTERVAL '30 days' -- 🔥 filtro aqui\n\nLEFT JOIN \"TicketEvaluations\" te \n  ON te.\"ticketId\" = t.id\n\nWHERE \n  u.\"tenantId\" = 1\n\nGROUP BY u.name\nORDER BY u.name;",
+  "isActive": false,
+  "createdAt": "2026-03-30T18:01:56.506Z"
+}
